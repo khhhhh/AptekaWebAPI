@@ -29,9 +29,8 @@ namespace AptekaWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<ErrorHandlerMiddleware>();
-            services.AddScoped<AuthentificationMiddleware>();
-            services.AddScoped<AccessStatusMiddleware>();
+            //services.AddScoped<ErrorHandlerMiddleware>();
+           // services.AddScoped<AuthentificationMiddleware>();
             services.AddDbContext<PharmacyContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
         }
@@ -39,6 +38,9 @@ namespace AptekaWebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            //seed here
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
