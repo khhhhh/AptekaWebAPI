@@ -12,7 +12,7 @@ namespace AptekaWebAPI.Controllers
     {
 
         [HttpPut]
-        public ActionResult Registrating([FromHeader] string token, [FromBody] string login, string password)
+        public ActionResult Registrating([FromHeader] string token, [FromHeader] string login,[FromHeader] string password)
         {
             return NotFound();
         }

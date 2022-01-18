@@ -10,8 +10,8 @@ namespace AptekaWebAPI.Controllers
     [Route("/login")]
     public class Login : ControllerBase
     {
-        [HttpPut]
-        public ActionResult Logining([FromHeader] string token,[FromBody] string login, [FromBody] string password)
+        [HttpPut("/Log")]
+        public ActionResult Logining([FromHeader] string token,[FromHeader] string login, [FromHeader] string password)
         {
             return NotFound();
         }
