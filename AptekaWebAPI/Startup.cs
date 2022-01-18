@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AptekaWebAPI.Middleware;
+using AptekaWebAPI.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace AptekaWebAPI
 {
@@ -30,6 +32,8 @@ namespace AptekaWebAPI
             services.AddScoped<ErrorHandlerMiddleware>();
             services.AddScoped<AuthentificationMiddleware>();
             services.AddScoped<AccessStatusMiddleware>();
+            services.AddDbContext<PharmacyContext>(options =>
+                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
