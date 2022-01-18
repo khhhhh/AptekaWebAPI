@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 namespace AptekaWebAPI.Controllers
 {
     [ApiController]
-    [Route("/user/api/pharmacy")]
-    public class PharmacyUser : ControllerBase
+    [Route("/admin/api/pharmacy")]
+    public class PharmacyAdmin : ControllerBase
     {
         [HttpGet("/all")]
         public ActionResult GetAll()
@@ -42,9 +41,5 @@ namespace AptekaWebAPI.Controllers
         {
             return NotFound();
         }
-
-        //add to cart
-
-        //create new controller for carts
     }
 }
