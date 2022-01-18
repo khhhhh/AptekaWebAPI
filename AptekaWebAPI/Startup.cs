@@ -45,19 +45,14 @@ namespace AptekaWebAPI
             }
 
             app.UseRouting();
-            app.UseMiddleware<ErrorHandlerMiddleware>();
-            app.UseMiddleware<AuthentificationMiddleware>();
-            app.UseMiddleware<AccessStatusMiddleware>();
+            //app.UseMiddleware<ErrorHandlerMiddleware>();
+            //app.UseMiddleware<AuthentificationMiddleware>();
+            //app.UseMiddleware<AccessStatusMiddleware>();
             app.UseAuthentication();
 
             app.Run(async (cont) =>
             {
                 await cont.Response.WriteAsync("Hello");
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
             });
         }
     }
