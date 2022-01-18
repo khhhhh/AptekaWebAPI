@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AptekaWebAPI.Controllers
 {
     [Route("/api/pharmacy")]
-    public class Pharmacy
+    public class PharmacyUser
     {
         [HttpGet("/all")]
         public ActionResult GetAll()
