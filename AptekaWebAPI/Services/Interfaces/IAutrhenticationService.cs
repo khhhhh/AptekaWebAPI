@@ -7,6 +7,7 @@ namespace AptekaWebAPI.Services
 {
     public interface IAutrhenticationService
     {
+        public string OperationType(string type);
         public string Registrating(string login, string password);
 
         public string Logining(string login, string password);

@@ -54,7 +54,7 @@ namespace AptekaWebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMiddleware<ErrorHandlerMiddleware>();
+            //app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseSwagger();

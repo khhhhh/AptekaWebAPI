@@ -8,6 +8,10 @@ namespace AptekaWebAPI.Middleware
 {
     public class ErrorHandlerMiddleware : IMiddleware
     {
+        public ErrorHandlerMiddleware()
+        {
+              
+        }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
