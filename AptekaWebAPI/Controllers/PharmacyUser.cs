@@ -42,8 +42,5 @@ namespace AptekaWebAPI.Controllers
             return NotFound();
         }
 
-        //add to cart
-
-        //create new controller for carts
     }
 }

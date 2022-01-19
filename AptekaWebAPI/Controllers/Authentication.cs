@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 namespace AptekaWebAPI.Controllers
 {
     [ApiController]
-    [Route("/registration")]
-    public class Registration : ControllerBase
+    [Route("api/home")]
+    public class Authentication : ControllerBase
     {
 
-        [HttpPut]
+        [HttpGet("/registration")]
         public ActionResult Registrating([FromHeader] string token, [FromHeader] string login,[FromHeader] string password)
+        {
+            return NotFound();
+        }
+
+
+        [HttpPut("/login")]
+        public ActionResult Logining([FromHeader] string token, [FromHeader] string login, [FromHeader] string password)
         {
             return NotFound();
         }
