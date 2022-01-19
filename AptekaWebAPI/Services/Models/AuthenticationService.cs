@@ -14,13 +14,17 @@ namespace AptekaWebAPI.Services.Models
 
         public string OperationType(string type)
         {
-            if(type.Equals("login"))
+            if(!string.IsNullOrEmpty(type) && type.Equals("login"))
             {
                 return "/api/authentication/login";
             }
-            else
+            else if(!string.IsNullOrEmpty(type))
             {
                 return "/api/authentication/registration";
+            }
+            else
+            {
+                return "Online Pharmacy\n";
             }
         }
 

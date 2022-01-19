@@ -8,7 +8,7 @@ using AptekaWebAPI.Services;
 namespace AptekaWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/authentication")]
+    [Route("api/home/")]
     public class Authentication : ControllerBase
     {
         private readonly IAutrhenticationService _service;
@@ -17,21 +17,24 @@ namespace AptekaWebAPI.Controllers
             _service = service;
         }
 
+
         [HttpGet]
-        public ActionResult OperationType([FromBody] string type)
+        [Route("authentication/{type}")]
+        public ActionResult<string> OperationType([FromRoute] string type)
         {
+
             var result = _service.OperationType(type);
             return Ok(result);
         }
 
-        [HttpGet("/registration")]
+        [HttpGet("~/registration")]
         public ActionResult Registrating([FromHeader] string login,[FromHeader] string password)
         {
             return NotFound();
         }
 
 
-        [HttpPut("/login")]
+        [HttpPut("~/login")]
         public ActionResult Logining([FromHeader] string login, [FromHeader] string password)
         {
             return NotFound();
