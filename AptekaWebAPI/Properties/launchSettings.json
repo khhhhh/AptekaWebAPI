@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "registration",
+      "launchUrl": "api/authentication",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "AptekaWebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "registration",
+      "launchUrl": "api/authentication",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -29,7 +29,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/registration",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/authentication",
       "publishAllPorts": true
     }
   }

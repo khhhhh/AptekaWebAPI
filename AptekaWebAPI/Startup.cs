@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using AptekaWebAPI.Middleware;
 using AptekaWebAPI.Database;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using AptekaWebAPI.Services;
+using AptekaWebAPI.Services.Models;
 
 namespace AptekaWebAPI
 {
@@ -25,17 +28,22 @@ namespace AptekaWebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddScoped<ErrorHandlerMiddleware>();
-           // services.AddScoped<AuthentificationMiddleware>();
+
+            services.AddAutoMapper(GetType().Assembly);
+            services.AddScoped<IAutrhenticationService, AuthenticationService>();
+            services.AddScoped<IPharmacyUserService, PharmacyUserService>();
+            services.AddScoped<IPharmacyAdminService, PharmacyAdminService>();
+            services.AddScoped<ICartService, CartService>();
+
             services.AddDbContext<PharmacyContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+
+            services.AddSwaggerGen();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
@@ -46,15 +54,22 @@ namespace AptekaWebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-            //app.UseMiddleware<ErrorHandlerMiddleware>();
-            //app.UseMiddleware<AuthentificationMiddleware>();
-            //app.UseMiddleware<AccessStatusMiddleware>();
-            app.UseAuthentication();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseHttpsRedirection();
 
-            app.Run(async (cont) =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                await cont.Response.WriteAsync("Hello");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant");
+            });
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
         }
     }

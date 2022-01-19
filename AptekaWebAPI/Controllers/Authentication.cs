@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AptekaWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/home")]
+    [Route("api/authentication")]
     public class Authentication : ControllerBase
     {
 

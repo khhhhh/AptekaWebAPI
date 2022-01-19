@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AptekaWebAPI.Services.Models
 {
-    public class PharmacyUserService : IPharmacyUserServicy
+    public class PharmacyUserService : IPharmacyUserService
     {
         public void Delete(int id)
         {

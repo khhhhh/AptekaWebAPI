@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AptekaWebAPI.Services
 {
-    public interface IPharmacyUserServicy
+    public interface IPharmacyUserService
     {
         public void GetAll();
 
