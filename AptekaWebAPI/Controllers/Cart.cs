@@ -10,32 +10,32 @@ namespace AptekaWebAPI.Controllers
     [Route("/user/api/cart")]
     public class Cart : ControllerBase
     {
-        [HttpPost("{id}")]
+        [HttpPost("/favourite/{id}")]
         public ActionResult AddById([FromRoute] int id)
         {
             return NotFound();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("/favourite/{id}")]
         public ActionResult RemoveById([FromRoute] int id)
         {
             return NotFound();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("/favourite/{id}")]
         public ActionResult Modify([FromRoute] int id)
         {
             return NotFound();
         }
 
-        [HttpGet("/all")]
-        public ActionResult GetAll()
+        [HttpGet("/allFavourites")]
+        public ActionResult GetAllFavourites()
         {
             return NotFound();
         }
 
-        [HttpGet("{id}")]
-        public ActionResult GetByID([FromRoute] int id)
+        [HttpGet("/favourite/{id}")]
+        public ActionResult GetFavouriteByID([FromRoute] int id)
         {
             return NotFound();
         }

@@ -10,33 +10,33 @@ namespace AptekaWebAPI.Controllers
     [Route("/admin/api/pharmacy")]
     public class PharmacyAdmin : ControllerBase
     {
-        [HttpGet("/all")]
-        public ActionResult GetAll()
+        [HttpGet("/allProducts")]
+        public ActionResult GetAllProducts()
         {
 
             return NotFound();
         }
 
-        [HttpGet("/{id}")]
-        public ActionResult GetById([FromRoute] int id)
+        [HttpGet("/product/{id}")]
+        public ActionResult GetProductById([FromRoute] int id)
         {
             return NotFound();
         }
 
-        [HttpGet("/{name}")]
-        public ActionResult GetByName([FromRoute] string name)
+        [HttpGet("/product/{name}")]
+        public ActionResult GetProductByName([FromRoute] string name)
         {
             return NotFound();
         }
 
 
-        [HttpPut("/{id}")]
+        [HttpPut("/product/{id}")]
         public ActionResult Modify([FromRoute] int id)
         {
             return NotFound();
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("/product/{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
             return NotFound();

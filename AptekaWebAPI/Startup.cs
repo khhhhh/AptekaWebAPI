@@ -68,13 +68,10 @@ namespace AptekaWebAPI
             services.AddScoped<IPharmacyAdminService, PharmacyAdminService>();
             services.AddScoped<ICartService, CartService>();
 
-            services.AddDbContext<PharmacyContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            //services.AddDbContext<PharmacyContext>(options =>
+            //    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AptekaWebAPI", Version = "v1" });
-            });
+            services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -89,7 +86,7 @@ namespace AptekaWebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AptekaWebAPI v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AptekatWebApi");
                 });
 
             }
