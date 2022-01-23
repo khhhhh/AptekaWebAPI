@@ -84,16 +84,18 @@ namespace AptekaWebAPI
 
             if (env.IsDevelopment())
             {
+
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AptekaWebAPI v1");
+                });
+
             }
 
             //app.UseMiddleware<ErrorHandlerMiddleware>();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AptekaWebAPI v1");
-            });
 
             app.UseHttpsRedirection();
             app.UseRouting();
