@@ -16,6 +16,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using AptekaWebAPI.Services;
 using AptekaWebAPI.Services.Models;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using AptekaWebAPI.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace AptekaWebAPI
 {
@@ -30,6 +35,31 @@ namespace AptekaWebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtSection = Configuration.GetSection("JWTSettings");
+            services.Configure<JWTSettings>(jwtSection);
+
+            var appSettings = jwtSection.Get<JWTSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
             services.AddControllers();
 
             services.AddAutoMapper(GetType().Assembly);
@@ -41,7 +71,10 @@ namespace AptekaWebAPI
             services.AddDbContext<PharmacyContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AptekaWebAPI", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,16 +88,18 @@ namespace AptekaWebAPI
             }
 
             //app.UseMiddleware<ErrorHandlerMiddleware>();
-            app.UseHttpsRedirection();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AptekaWebAPI v1");
             });
 
+            app.UseHttpsRedirection();
             app.UseRouting();
 
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
