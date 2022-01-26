@@ -1,7 +1,4 @@
 {
-  "JWTSettings": {
-    "SecretKey": "s1mples1ecretk1ey1"
-  },
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
