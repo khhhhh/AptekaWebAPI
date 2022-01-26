@@ -1,4 +1,7 @@
 {
+  "JWTSettings": {
+    "SecretKey": "s1mples1ecretk1ey1"
+  },
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -32,5 +35,6 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "publishAllPorts": true
     }
+
   }
 }

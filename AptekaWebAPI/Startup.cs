@@ -71,6 +71,8 @@ namespace AptekaWebAPI
             //services.AddDbContext<PharmacyContext>(options =>
             //    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
+            services.AddScoped<ErrorHandlerMiddleware>();
+
             services.AddSwaggerGen();
         }
 
@@ -91,7 +93,7 @@ namespace AptekaWebAPI
 
             }
 
-            //app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
             app.UseHttpsRedirection();
