@@ -20,22 +20,22 @@ namespace AptekaWebAPI.Entities
                 new User()
                 {
                     Id = 1,
-                    Email = "test@mail.com",
-                    IsAdmin = false,
+                    Email = "dimon1432b@gmail.com",
+                    IsAdmin = true,
                     PasswordHash = getHash("password")
                 },
                 new User()
                 {
                     Id = 2,
-                    Email = "test2@mail.com",
-                    IsAdmin = false,
+                    Email = "oleg_hutsko@mail.ru",
+                    IsAdmin = true,
                     PasswordHash = getHash("password123")
                 },
                 new User()
                 {
                     Id = 3,
-                    Email = "test3@mail.com",
-                    IsAdmin = false,
+                    Email = "taras.iskiv@gmail.com",
+                    IsAdmin = true,
                     PasswordHash = getHash("internet")
                 }
             };
