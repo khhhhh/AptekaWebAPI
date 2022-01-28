@@ -35,6 +35,9 @@ namespace AptekaWebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<PharmacyContext>(options =>
+                          options.UseSqlServer(Configuration.GetConnectionString("ConnectionCS")));
+
             var jwtSection = Configuration.GetSection("JWTSettings");
             services.Configure<JWTSettings>(jwtSection);
 
