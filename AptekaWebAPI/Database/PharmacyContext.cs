@@ -15,6 +15,7 @@ namespace AptekaWebAPI.Database
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public string Connection = "";
     }
 }
