@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AptekaWebAPI.Database;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,6 +8,11 @@ namespace AptekaWebAPI.Entities
 {
     public class PharamcySeeder
     {
+        private readonly PharmacyContext pharmacyDB;
+        public PharamcySeeder(PharmacyContext pharmacyDB)
+        {
+            this.pharmacyDB = pharmacyDB;
+        }
         public string getHash(string password)
         {
             var hasher = MD5.Create();
@@ -41,6 +48,20 @@ namespace AptekaWebAPI.Entities
             };
 
             return users;
+        }
+
+        public void Seed()
+        {
+            if (pharmacyDB.Database.CanConnect())
+            {
+                if (!pharmacyDB.Users.Any())
+                {
+                    var restaurants = GetUsers();
+                    pharmacyDB.Users.AddRange(restaurants);
+                    pharmacyDB.SaveChanges();
+                }
+
+            }
         }
 
     }
