@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using AptekaWebAPI.Tokens;
 using Microsoft.OpenApi.Models;
+using AptekaWebAPI.Entities;
 
 namespace AptekaWebAPI
 {
@@ -79,10 +80,10 @@ namespace AptekaWebAPI
             services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PharamcySeeder seeder)
         {
 
-            //seed here
+            seeder.Seed();
 
             if (env.IsDevelopment())
             {
