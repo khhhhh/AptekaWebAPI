@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AptekaWebAPI.Properties.DTOs
 {
-    public class UpdateProductDto
+    public class UpdateProductDTO
     {
         [Required]
         public int Id { get; set; }

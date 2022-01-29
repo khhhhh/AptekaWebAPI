@@ -6,17 +6,29 @@ using System.Threading.Tasks;
 
 namespace AptekaWebAPI.Properties.DTOs
 {
-    public class CreateUserDto
+    public class CreateUserDTO
     {
         [Required]
-        [MinLength(6)]
-        [MaxLength(20)]
-        public string Login { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
+        [Required]
+        [MinLength(3)]
+        [MaxLength(25)]
+        public string Name { get; set; }
+
+        [Required]
+        [MinLength(3)]
+        [MaxLength(25)]
+        public string LastName { get; set; }
 
         [Required]
         [MinLength(8)]
         [MaxLength(25)]
         public string Password { get; set; }
+
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string PostalCode { get; set; }
     }
 }
