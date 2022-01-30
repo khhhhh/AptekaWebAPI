@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AptekaWebAPI.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,37 +11,34 @@ namespace AptekaWebAPI.Controllers
     [Route("/user/api/pharmacy")]
     public class PharmacyUser : ControllerBase
     {
-        [HttpGet("/all")]
+        private readonly IPharmacyUserService _service;
+
+        public PharmacyUser(IPharmacyUserService service)
+        {
+            _service = service;
+
+        }
+        [HttpGet("all")]
         public ActionResult GetAll()
         {
-
-            return NotFound();
+            _service.GetAll();
+            return Ok();
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public ActionResult GetById([FromRoute] int id)
         {
-            return NotFound();
+            _service.GetById(id);
+            return Ok();
         }
 
-        [HttpGet("/{name}")]
+        [HttpGet("{name}")]
         public ActionResult GetByName([FromRoute] string name)
         {
-            return NotFound();
+            _service.GetByName(name);
+            return Ok();
         }
 
-
-        [HttpPut("/{id}")]
-        public ActionResult Modify([FromRoute] int id)
-        {
-            return NotFound();
-        }
-
-        [HttpDelete("/{id}")]
-        public ActionResult Delete([FromRoute] int id)
-        {
-            return NotFound();
-        }
 
     }
 }

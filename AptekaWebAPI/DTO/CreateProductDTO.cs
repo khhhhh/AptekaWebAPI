@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AptekaWebAPI.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace AptekaWebAPI.Properties.DTOs
 
         [Required]
         public decimal Price { get; set; }
+
+        public List<CreateCategoryDTO> Categories { get; set; }
     }
 }

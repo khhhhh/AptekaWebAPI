@@ -8,11 +8,12 @@ namespace AptekaWebAPI.Services
 {
     public interface IPharmacyAdminService
     {
-        public void GetAll();
+        public void AddNewProduct(CreateProductDTO dto);
+        public IEnumerable<ProductDTO> GetAll();
 
-        public void GetById(int id);
+        public ProductDTO GetById(int id);
 
-        public void GetByName(string name);
+        public IEnumerable<ProductDTO> GetByName(string name);
 
         public void Modify(UpdateProductDTO dto);
 

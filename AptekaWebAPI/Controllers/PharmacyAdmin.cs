@@ -20,37 +20,47 @@ namespace AptekaWebAPI.Controllers
 
         }
 
-        [HttpGet("/allProducts")]
+        [HttpPost("addProduct")]
+        public ActionResult AddNewProduct([FromHeader] string token, [FromBody] CreateProductDTO dto)
+        {
+            _service.AddNewProduct(dto);
+            return Ok();
+        }
+
+        [HttpGet("allProducts")]
         public ActionResult GetAllProducts()
         {
-
-            return NotFound();
+            _service.GetAll();
+            return Ok();
         }
 
-        [HttpGet("/product/{id}")]
-        public ActionResult GetProductById([FromRoute] int id)
+        [HttpGet("product/{id}")]
+        public ActionResult GetProductById([FromHeader] string token, [FromRoute] int id)
         {
-            return NotFound();
+            _service.GetById(id);
+            return Ok();
         }
 
-        [HttpGet("/product/{name}")]
-        public ActionResult GetProductByName([FromRoute] string name)
+        [HttpGet("product/{name}")]
+        public ActionResult GetProductByName([FromHeader] string token, [FromRoute] string name)
         {
-            return NotFound();
+            _service.GetByName(name);
+            return Ok();
         }
 
 
-        [HttpPut("/product/{id}")]
+        [HttpPut("product/{id}")]
         public ActionResult Modify([FromHeader] string token,[FromBody] UpdateProductDTO dto)
         {
             _service.Modify(dto);
             return Ok();
         }
 
-        [HttpDelete("/product/{id}")]
-        public ActionResult Delete([FromRoute] int id)
+        [HttpDelete("product/{id}")]
+        public ActionResult Delete([FromHeader] string token, [FromRoute] int id)
         {
-            return NotFound();
+            _service.Delete(id);
+            return Ok();
         }
     }
 

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AptekaWebAPI.Database;
+using AptekaWebAPI.Properties.DTOs;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,29 +11,48 @@ namespace AptekaWebAPI.Services.Models
 {
     public class PharmacyUserService : IPharmacyUserService
     {
-        public void Delete(int id)
+        private readonly IMapper _mapper;
+        private readonly PharmacyContext _context;
+        public PharmacyUserService(IMapper mapper, PharmacyContext context)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _context = context;
+        }
+        public IEnumerable<ProductDTO> GetAll()
+        {
+            var products = _context
+                .Products
+                .Include(r => r.Categories)
+                .ToList();
+
+            if (products == null) throw new Exception();
+            return _mapper.Map<List<ProductDTO>>(products);
         }
 
-        public void GetAll()
+        public ProductDTO GetById(int id)
         {
-            throw new NotImplementedException();
+            var product = _context
+               .Products
+               .Include(r => r.Categories)
+               .ToList()
+               .Where(x => x.Id == id).FirstOrDefault();
+
+            if (product == null) throw new Exception();
+
+            return _mapper.Map<ProductDTO>(product);
         }
 
-        public void GetById(int id)
+        public IEnumerable<ProductDTO> GetByName(string name)
         {
-            throw new NotImplementedException();
-        }
+            var products = _context
+               .Products
+               .Include(r => r.Categories)
+               .ToList()
+               .Where(x => x.Name.StartsWith(name));
 
-        public void GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
+            if (products == null) throw new Exception();
 
-        public void Modify(int id)
-        {
-            throw new NotImplementedException();
+            return _mapper.Map<List<ProductDTO>>(products);
         }
     }
 }

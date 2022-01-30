@@ -1,6 +1,8 @@
 ﻿using AptekaWebAPI.Database;
+using AptekaWebAPI.Entities;
 using AptekaWebAPI.Properties.DTOs;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,24 +19,68 @@ namespace AptekaWebAPI.Services.Models
             _mapper = mapper;
             _context = context;
         }
+
+        public void AddNewProduct(CreateProductDTO dto)
+        {
+            var newProduct = _mapper.Map<Product>(dto);
+            newProduct.Categories = _mapper.Map<List<ProductCategory>>(dto.Categories);
+
+            _context.Products.Add(newProduct);
+
+            _context.SaveChanges();
+        }
+
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var product = _context
+                 .Products
+                 .Include(r => r.Categories)
+                 .ToList()
+                 .Where(x => x.Id == id).FirstOrDefault();
+
+            if (product == null) throw new Exception();
+
+            _context.Products.Remove(product);
+
+            _context.SaveChanges();
+
         }
 
-        public void GetAll()
+        public IEnumerable<ProductDTO> GetAll()
         {
-            throw new NotImplementedException();
+            var products = _context
+                .Products
+                .Include(r => r.Categories)
+                .ToList();
+
+            if (products == null) throw new Exception();
+            return _mapper.Map<List<ProductDTO>>(products);
         }
 
-        public void GetById(int id)
+        public ProductDTO GetById(int id)
         {
-            throw new NotImplementedException();
+            var product = _context
+               .Products
+               .Include(r => r.Categories)
+               .ToList()
+               .Where(x => x.Id == id).FirstOrDefault();
+
+            if(product == null) throw new Exception();
+
+            return _mapper.Map<ProductDTO>(product);
         }
 
-        public void GetByName(string name)
+        public IEnumerable<ProductDTO> GetByName(string name)
         {
-            throw new NotImplementedException();
+            var products = _context
+               .Products
+               .Include(r => r.Categories)
+               .ToList()
+               .Where(x => x.Name.StartsWith(name));
+
+            if (products == null) throw new Exception();
+
+            return _mapper.Map<List<ProductDTO>>(products);
         }
 
         public void Modify(UpdateProductDTO dto)
