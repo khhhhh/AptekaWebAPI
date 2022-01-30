@@ -15,10 +15,16 @@ namespace AptekaWebAPI.AutoMapping
         {
             return new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<UpdateProductDTO, Product>();
                 cfg.CreateMap<CreateProductDTO, Product>();
+                cfg.CreateMap<UpdateProductDTO, Product>();
                 cfg.CreateMap<UpdateUserDTO, User>();
-                cfg.CreateMap<CreateUserDTO, User>();
+                cfg.CreateMap<CreateUserDTO, User>()
+               .ForMember(c => c.Address, r => r.MapFrom(dto => new Address()
+               {
+                   City = dto.City,
+                   Street = dto.Street,
+                   PostalCode = dto.PostalCode
+               }));
             }).CreateMapper();
         }
     }
