@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AptekaWebAPI.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,12 +8,14 @@ namespace AptekaWebAPI.Services
 {
     public interface ICartService
     {
-        public void AddById(int userId, int id);
+        public void AddById(int userId, AddToCartDTO dto);
 
         public void RemoveById(int id);
 
-        public void GetAll();
+        public IEnumerable<CartDTO> GetAll(int userId);
 
-        public void GetByID(int id);
+        public CartDTO GetByID(int id);
+
+        public void Modify(AddToCartDTO dto);
     }
 }

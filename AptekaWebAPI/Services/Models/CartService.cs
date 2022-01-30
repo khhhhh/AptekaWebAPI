@@ -1,4 +1,6 @@
-﻿using AptekaWebAPI.Database;
+﻿using AptekaWebAPI.Entities;
+using AptekaWebAPI.Database;
+using AptekaWebAPI.DTO;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -16,27 +18,61 @@ namespace AptekaWebAPI.Services.Models
             _mapper = mapper;
             _context = context;
         }
-        public void AddById(int UserId,int id)
+        public void AddById(int UserId, AddToCartDTO dto)
         {
-            var selectedProduct = _context.Products.Where(x => x.Id == id);
+            var selectedProduct = _context.Products.Where(x => x.Id == dto.Id).FirstOrDefault();
             if (selectedProduct == null) throw new Exception();
-            _context.Users.Where(x => x.Id == UserId);
-            //_context.Carts.Add()
+            var user = _context.Users.Where(x => x.Id == UserId).FirstOrDefault();
+            if(user == null) throw new Exception();
+            var cart = new CartDTO()
+            {
+                Count = dto.Count,
+                Product = selectedProduct,
+                User = user
+            };
+
+            var newCart = _mapper.Map<Cart>(cart);
+            newCart.User = cart.User;
+            newCart.Product = cart.Product;
+            _context.Carts.Add(newCart);
+            _context.SaveChanges();
         }
 
-        public void GetAll()
+        public IEnumerable<CartDTO> GetAll(int userId)
         {
-            throw new NotImplementedException();
+            var product = _context.Carts.ToList().FirstOrDefault();
+
+            var products = _context.Carts.ToList().Where(x => x.User.Id == userId);
+            if (products == null) throw new Exception();
+            return _mapper.Map<List<CartDTO>>(products);
         }
 
-        public void GetByID(int id)
+        public CartDTO GetByID(int id)
         {
-            throw new NotImplementedException();
+            var product = _context.Carts.ToList().Where(x => x.Id == id);
+            if (product == null) throw new Exception();
+            return _mapper.Map<CartDTO>(product);
         }
 
         public void RemoveById(int id)
         {
-            throw new NotImplementedException();
+
+            var selectedCart = _context.Carts.ToList().Where(x => x.Id == id).FirstOrDefault();
+            if (selectedCart == null) throw new Exception();
+
+            _context.Carts.Remove(selectedCart);
+            _context.SaveChanges();
         }
+
+
+        public void Modify(AddToCartDTO dto)
+        {
+            var selectedCart = _context.Carts.ToList().Where(x => x.Id == dto.Id).FirstOrDefault();
+            if(selectedCart == null) throw new Exception();
+
+            selectedCart.Count = dto.Count;
+            _context.SaveChanges();
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using AptekaWebAPI.Services;
+﻿using AptekaWebAPI.DTO;
+using AptekaWebAPI.Services;
 using AptekaWebAPI.Tokens;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace AptekaWebAPI.Controllers
 {
     [ApiController]
-    [Route("/user/api/cart")]
+    [Route("/user/api/cart/favourite")]
     public class Cart : ControllerBase
     {
         private readonly ICartService _service;
@@ -20,37 +21,44 @@ namespace AptekaWebAPI.Controllers
 
         }
 
-        [HttpPost("/favourite/{id}")]
-        public ActionResult AddById([FromHeader] string token, [FromRoute] int id)
+        [HttpPost]
+        public ActionResult AddById([FromHeader] string token, [FromBody] AddToCartDTO dto)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
             if (activeUser == null) throw new Exception();
-            var 
-            return NotFound();
+            _service.AddById(activeUser.Id, dto);
+            return Ok();
         }
 
-        [HttpDelete("/favourite/{id}")]
-        public ActionResult RemoveById([FromRoute] int id)
+        [HttpDelete("{id}")]
+        public ActionResult RemoveById([FromHeader] string token, [FromRoute] int id)
         {
-            return NotFound();
+            _service.RemoveById(id);
+            return Ok();
         }
 
-        [HttpPut("/favourite/{id}")]
-        public ActionResult Modify([FromRoute] int id)
+        [HttpPut("{id}")]
+        public ActionResult Modify([FromHeader] string token, [FromBody] AddToCartDTO dto)
         {
-            return NotFound();
+            _service.Modify(dto);
+            return Ok();
         }
 
-        [HttpGet("/allFavourites")]
-        public ActionResult GetAllFavourites()
+        [HttpGet("all")]
+        public ActionResult GetAllFavourites([FromHeader] string token)
         {
-            return NotFound();
+            var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
+            if (activeUser == null) throw new Exception();
+
+            var allProducts = _service.GetAll(activeUser.Id);
+            return Ok(allProducts);
         }
 
-        [HttpGet("/favourite/{id}")]
-        public ActionResult GetFavouriteByID([FromRoute] int id)
+        [HttpGet("{id}")]
+        public ActionResult GetFavouriteByID([FromHeader] string token, [FromRoute] int id)
         {
-            return NotFound();
+            var selectedProduct = _service.GetByID(id);
+            return Ok(selectedProduct);
         }
     }
 }
