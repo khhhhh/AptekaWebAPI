@@ -16,8 +16,14 @@ namespace AptekaWebAPI.Entities
         public string getHash(string password)
         {
             var hasher = MD5.Create();
-            var bytes = Encoding.Default.GetBytes(password);
-            return hasher.ComputeHash(bytes).ToString();
+            var bytes = Encoding.ASCII.GetBytes(password);
+            var hash = hasher.ComputeHash(bytes);
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                result.Append(hash[i].ToString("X2"));
+            }
+            return result.ToString();
         }
 
         private IEnumerable<User> GetUsers()
@@ -26,21 +32,18 @@ namespace AptekaWebAPI.Entities
             {
                 new User()
                 {
-                    Id = 1,
                     Email = "dimon1432b@gmail.com",
                     IsAdmin = true,
                     PasswordHash = getHash("password")
                 },
                 new User()
                 {
-                    Id = 2,
                     Email = "oleg_hutsko@mail.ru",
                     IsAdmin = true,
                     PasswordHash = getHash("password123")
                 },
                 new User()
                 {
-                    Id = 3,
                     Email = "taras.iskiv@gmail.com",
                     IsAdmin = true,
                     PasswordHash = getHash("internet")
@@ -58,6 +61,7 @@ namespace AptekaWebAPI.Entities
                 {
                     var restaurants = GetUsers();
                     pharmacyDB.Users.AddRange(restaurants);
+                    
                     pharmacyDB.SaveChanges();
                 }
 
