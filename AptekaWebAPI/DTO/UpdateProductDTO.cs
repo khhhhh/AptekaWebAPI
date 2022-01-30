@@ -12,6 +12,6 @@ namespace AptekaWebAPI.Properties.DTOs
         public int Id { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AptekaWebAPI.Properties.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace AptekaWebAPI.Services
 
         public void GetByName(string name);
 
-        public void Modify(int id);
+        public void Modify(UpdateProductDTO dto);
 
         public void Delete(int id);
     }

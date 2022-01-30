@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AptekaWebAPI.Properties.DTOs;
+using AptekaWebAPI.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,14 @@ namespace AptekaWebAPI.Controllers
     [Route("/admin/api/pharmacy")]
     public class PharmacyAdmin : ControllerBase
     {
+        private readonly IPharmacyAdminService _service;
+
+        public PharmacyAdmin(IPharmacyAdminService service)
+        {
+            _service = service;
+
+        }
+
         [HttpGet("/allProducts")]
         public ActionResult GetAllProducts()
         {
@@ -31,9 +41,10 @@ namespace AptekaWebAPI.Controllers
 
 
         [HttpPut("/product/{id}")]
-        public ActionResult Modify([FromRoute] int id)
+        public ActionResult Modify([FromHeader] string token,[FromBody] UpdateProductDTO dto)
         {
-            return NotFound();
+            _service.Modify(dto);
+            return Ok();
         }
 
         [HttpDelete("/product/{id}")]
@@ -42,4 +53,5 @@ namespace AptekaWebAPI.Controllers
             return NotFound();
         }
     }
+
 }

@@ -11,7 +11,7 @@ namespace AptekaWebAPI.Controllers
     public class Cart : ControllerBase
     {
         [HttpPost("/favourite/{id}")]
-        public ActionResult AddById([FromRoute] int id)
+        public ActionResult AddById([FromHeader] string token, [FromRoute] int id)
         {
             return NotFound();
         }

@@ -11,8 +11,6 @@ namespace AptekaWebAPI.Services
 
         public void RemoveById(int id);
 
-        public void Modify(int id);
-
         public void GetAll();
 
         public void GetByID(int id);
