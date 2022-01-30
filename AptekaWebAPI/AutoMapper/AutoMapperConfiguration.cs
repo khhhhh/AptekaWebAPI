@@ -18,6 +18,9 @@ namespace AptekaWebAPI.AutoMapping
                 cfg.CreateMap<CreateProductDTO, Product>();
                 cfg.CreateMap<UpdateProductDTO, Product>();
                 cfg.CreateMap<UpdateUserDTO, User>();
+                cfg.CreateMap<ProductDTO, Product>();
+                cfg.CreateMap<CategoryDTO, ProductCategory>();
+                cfg.CreateMap<CreateCategoryDTO, ProductCategory>();
                 cfg.CreateMap<CreateUserDTO, User>()
                .ForMember(c => c.Address, r => r.MapFrom(dto => new Address()
                {
