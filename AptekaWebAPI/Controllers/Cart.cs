@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AptekaWebAPI.Services;
+using AptekaWebAPI.Tokens;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,20 @@ namespace AptekaWebAPI.Controllers
     [Route("/user/api/cart")]
     public class Cart : ControllerBase
     {
+        private readonly ICartService _service;
+
+        public Cart(ICartService service)
+        {
+            _service = service;
+
+        }
+
         [HttpPost("/favourite/{id}")]
         public ActionResult AddById([FromHeader] string token, [FromRoute] int id)
         {
+            var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
+            if (activeUser == null) throw new Exception();
+            var 
             return NotFound();
         }
 

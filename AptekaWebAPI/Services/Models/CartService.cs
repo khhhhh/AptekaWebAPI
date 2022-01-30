@@ -16,11 +16,11 @@ namespace AptekaWebAPI.Services.Models
             _mapper = mapper;
             _context = context;
         }
-        public void AddById(int id)
+        public void AddById(int UserId,int id)
         {
             var selectedProduct = _context.Products.Where(x => x.Id == id);
             if (selectedProduct == null) throw new Exception();
-
+            _context.Users.Where(x => x.Id == UserId);
             //_context.Carts.Add()
         }
 

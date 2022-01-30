@@ -26,6 +26,7 @@ namespace AptekaWebAPI.Services.Models
                 .ToList();
 
             if (products == null) throw new Exception();
+
             return _mapper.Map<List<ProductDTO>>(products);
         }
 
@@ -42,17 +43,5 @@ namespace AptekaWebAPI.Services.Models
             return _mapper.Map<ProductDTO>(product);
         }
 
-        public IEnumerable<ProductDTO> GetByName(string name)
-        {
-            var products = _context
-               .Products
-               .Include(r => r.Categories)
-               .ToList()
-               .Where(x => x.Name.StartsWith(name));
-
-            if (products == null) throw new Exception();
-
-            return _mapper.Map<List<ProductDTO>>(products);
-        }
     }
 }

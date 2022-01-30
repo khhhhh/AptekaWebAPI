@@ -28,35 +28,28 @@ namespace AptekaWebAPI.Controllers
         }
 
         [HttpGet("allProducts")]
-        public ActionResult GetAllProducts()
+        public ActionResult<IEnumerable<ProductDTO>> GetAllProducts([FromHeader] string token)
         {
-            _service.GetAll();
-            return Ok();
+            var products = _service.GetAll();
+            return Ok(products);
         }
 
-        [HttpGet("product/{id}")]
-        public ActionResult GetProductById([FromHeader] string token, [FromRoute] int id)
+        [HttpGet("{id}")]
+        public ActionResult<ProductDTO> GetProductById([FromHeader] string token, [FromRoute] int id)
         {
-            _service.GetById(id);
-            return Ok();
-        }
-
-        [HttpGet("product/{name}")]
-        public ActionResult GetProductByName([FromHeader] string token, [FromRoute] string name)
-        {
-            _service.GetByName(name);
-            return Ok();
+            var product = _service.GetById(id);
+            return Ok(product);
         }
 
 
-        [HttpPut("product/{id}")]
+        [HttpPut("update")]
         public ActionResult Modify([FromHeader] string token,[FromBody] UpdateProductDTO dto)
         {
             _service.Modify(dto);
             return Ok();
         }
 
-        [HttpDelete("product/{id}")]
+        [HttpDelete("remove/{id}")]
         public ActionResult Delete([FromHeader] string token, [FromRoute] int id)
         {
             _service.Delete(id);

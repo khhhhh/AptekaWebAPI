@@ -7,7 +7,7 @@ namespace AptekaWebAPI.Services
 {
     public interface ICartService
     {
-        public void AddById(int id);
+        public void AddById(int userId, int id);
 
         public void RemoveById(int id);
 

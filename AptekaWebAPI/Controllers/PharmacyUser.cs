@@ -19,26 +19,18 @@ namespace AptekaWebAPI.Controllers
 
         }
         [HttpGet("all")]
-        public ActionResult GetAll()
+        public ActionResult GetAll([FromHeader] string token)
         {
             _service.GetAll();
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetById([FromRoute] int id)
+        public ActionResult GetById([FromHeader] string token, [FromRoute] int id)
         {
             _service.GetById(id);
             return Ok();
         }
-
-        [HttpGet("{name}")]
-        public ActionResult GetByName([FromRoute] string name)
-        {
-            _service.GetByName(name);
-            return Ok();
-        }
-
 
     }
 }

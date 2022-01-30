@@ -13,7 +13,6 @@ namespace AptekaWebAPI.Services
 
         public ProductDTO GetById(int id);
 
-        public IEnumerable<ProductDTO> GetByName(string name);
 
         public void Modify(UpdateProductDTO dto);
 

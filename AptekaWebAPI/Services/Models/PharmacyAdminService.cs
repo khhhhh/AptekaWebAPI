@@ -70,19 +70,6 @@ namespace AptekaWebAPI.Services.Models
             return _mapper.Map<ProductDTO>(product);
         }
 
-        public IEnumerable<ProductDTO> GetByName(string name)
-        {
-            var products = _context
-               .Products
-               .Include(r => r.Categories)
-               .ToList()
-               .Where(x => x.Name.StartsWith(name));
-
-            if (products == null) throw new Exception();
-
-            return _mapper.Map<List<ProductDTO>>(products);
-        }
-
         public void Modify(UpdateProductDTO dto)
         {
             var selectedProduct = _context.Products.ToList().Where(x => x.Id == dto.Id).FirstOrDefault();
