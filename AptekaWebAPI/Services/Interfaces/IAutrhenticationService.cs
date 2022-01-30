@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AptekaWebAPI.DTO;
+using AptekaWebAPI.Properties.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +9,8 @@ namespace AptekaWebAPI.Services
 {
     public interface IAutrhenticationService
     {
-        public string OperationType(string type);
-        public string Registrating(string login, string password);
+        public int Registrating(CreateUserDTO dto);
 
-        public string Logining(string login, string password);
+        public int Logining(LoginUserDTO dto);
     }
 }

@@ -40,6 +40,9 @@ namespace AptekaWebAPI
             services.AddDbContext<PharmacyContext>(options =>
                           options.UseSqlServer(Configuration.GetConnectionString("ConnectionCS")));
 
+
+            services.AddScoped<PharamcySeeder>();
+
             var jwtSection = Configuration.GetSection("JWTSettings");
             services.Configure<JWTSettings>(jwtSection);
 
@@ -85,7 +88,6 @@ namespace AptekaWebAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PharamcySeeder seeder)
         {
-
             seeder.Seed();
 
             if (env.IsDevelopment())
