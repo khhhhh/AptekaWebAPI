@@ -35,13 +35,6 @@ namespace AptekaWebAPI.Services.Models
                     (cartItem.Count > 1) ? "s" : string.Empty,
                     cartItem.ProductPrice * cartItem.Count);
             }
-            var smtpClient = new SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                Credentials = new NetworkCredential(email, password),
-                EnableSsl = true,
-            };
-
             string body = string.Format(@" <h1>Hello, {0}!</h1><br>
              <p> Thank you for purchasing next items:
                   <ul>
@@ -59,7 +52,21 @@ namespace AptekaWebAPI.Services.Models
             ", 
             user.Name, sb.ToString(), address?.City, address?.Street, address?.PostalCode);
 
-            smtpClient.Send(email, user.Email, "Thank you for purchase!", body);
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(email);
+                mail.To.Add(user.Email);
+                mail.Subject = "Thank you for purchase!";
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential(email, password);
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
         }
         public BuyService(PharmacyContext context)
         {
