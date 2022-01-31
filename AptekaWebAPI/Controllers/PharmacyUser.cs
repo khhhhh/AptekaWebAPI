@@ -1,4 +1,5 @@
 ﻿using AptekaWebAPI.Services;
+using AptekaWebAPI.Tokens;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,15 @@ namespace AptekaWebAPI.Controllers
 
         public PharmacyUser(IPharmacyUserService service)
         {
+            
             _service = service;
 
         }
         [HttpGet("all")]
         public ActionResult GetAll([FromHeader] string token)
         {
+            var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
+            if (activeUser == null) throw new Exception();
             _service.GetAll();
             return Ok();
         }
@@ -28,6 +32,9 @@ namespace AptekaWebAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById([FromHeader] string token, [FromRoute] int id)
         {
+            var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
+            if (activeUser == null) throw new Exception();
+
             _service.GetById(id);
             return Ok();
         }

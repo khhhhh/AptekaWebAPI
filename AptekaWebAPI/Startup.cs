@@ -23,6 +23,7 @@ using AptekaWebAPI.Tokens;
 using Microsoft.OpenApi.Models;
 using AptekaWebAPI.Entities;
 using AptekaWebAPI.AutoMapping;
+using AptekaWebAPI.Services.Interfaces;
 
 namespace AptekaWebAPI
 {
@@ -75,6 +76,7 @@ namespace AptekaWebAPI
             services.AddScoped<IPharmacyUserService, PharmacyUserService>();
             services.AddScoped<IPharmacyAdminService, PharmacyAdminService>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IBuyService, BuyService>();
 
             services.AddSingleton(AutoMapperConfiguration.Initialize());
 
