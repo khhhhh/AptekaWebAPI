@@ -24,16 +24,18 @@ namespace AptekaWebAPI.Services.Models
                 .ToList()
                 .Where(x => x.UserId == id);
 
+
             var address = user.Address;
 
             StringBuilder sb = new StringBuilder();
             foreach(var cartItem in cartItems)
             {
+                var product = _context.Products.Where(x => x.Id == cartItem.ProductId).FirstOrDefault();
                 sb.AppendFormat("<li>{0}, {1} piece{2} : {3} zł.</li>\n",
-                    cartItem.ProductName,
+                    product.Name,
                     cartItem.Count,
                     (cartItem.Count > 1) ? "s" : string.Empty,
-                    cartItem.ProductPrice * cartItem.Count);
+                    product.Price * cartItem.Count);
             }
             string body = string.Format(@" <h1>Hello, {0}!</h1><br>
              <p> Thank you for purchasing next items:
