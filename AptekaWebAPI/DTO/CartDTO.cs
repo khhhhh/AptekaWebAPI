@@ -4,7 +4,7 @@ namespace AptekaWebAPI.DTO
 {
     public class CartDTO
     {
-        public string Login { get; set; }
+        public int UserId { get; set; }
         public int ProductId { get; set; }
         public string Name { get; set; }
 

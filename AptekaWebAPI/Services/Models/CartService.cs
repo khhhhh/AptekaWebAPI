@@ -27,29 +27,25 @@ namespace AptekaWebAPI.Services.Models
             var cart = new CartDTO()
             {
                 Count = dto.Count,
-                //ProductId = selectedProduct.Id,
+                UserId = UserId,
+                ProductId = selectedProduct.Id,
                 Price = selectedProduct.Price,
                 Name = selectedProduct.Name,
-                Login = user.Email
             };
 
             var newCart = _mapper.Map<Cart>(cart);
-            //newCart.User = cart.User;
-            //newCart.Product = cart.Product;
             _context.Carts.Add(newCart);
             _context.SaveChanges();
         }
 
         public IEnumerable<CartDTO> GetAll(int userId)
         {
-            //var product = _context.Carts.ToList().FirstOrDefault();
+            var product = _context.Carts.ToList().FirstOrDefault();
 
-            //var userLogin = _context.Users.Where(x => x.Id == userId).FirstOrDefault()?.Email; 
+            var products = _context.Carts.ToList().Where(x => x.UserId == userId);
+            if (products == null) throw new Exception();
 
-            //var products = _context.Carts.ToList().Where(x => x.User.Email == userLogin);
-            //if (products == null) throw new Exception();
-            //return _mapper.Map<List<CartDTO>>(products);
-            return null;
+            return _mapper.Map<List<CartDTO>>(products);
         }
 
         public CartDTO GetByID(int id)
