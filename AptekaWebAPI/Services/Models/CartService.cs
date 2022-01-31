@@ -30,7 +30,7 @@ namespace AptekaWebAPI.Services.Models
                 UserId = UserId,
                 ProductId = selectedProduct.Id,
                 Price = selectedProduct.Price,
-                Name = selectedProduct.Name,
+                ProductName = selectedProduct.Name,
             };
 
             var newCart = _mapper.Map<Cart>(cart);
