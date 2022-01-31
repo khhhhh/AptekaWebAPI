@@ -40,7 +40,6 @@ namespace AptekaWebAPI.Services.Models
 
         public IEnumerable<CartDTO> GetAll(int userId)
         {
-            var product = _context.Carts.ToList().FirstOrDefault();
 
             var products = _context.Carts.ToList().Where(x => x.UserId == userId);
             if (products == null) throw new Exception();
@@ -50,7 +49,7 @@ namespace AptekaWebAPI.Services.Models
 
         public CartDTO GetByID(int id)
         {
-            var product = _context.Carts.ToList().Where(x => x.Id == id);
+            var product = _context.Carts.ToList().Where(x => x.Id == id).FirstOrDefault();
             if (product == null) throw new Exception();
             return _mapper.Map<CartDTO>(product);
         }
