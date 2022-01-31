@@ -7,12 +7,12 @@ namespace AptekaWebAPI.Entities
 {
     public class Product
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
         public string Description { get; set; }
         public List<ProductCategory> Categories { get; set; }
         public int Count { get; set; }
-        public int Price { get; set; }
+        public int ProductPrice { get; set; }
         public string Image { get; set; }
     }
 }

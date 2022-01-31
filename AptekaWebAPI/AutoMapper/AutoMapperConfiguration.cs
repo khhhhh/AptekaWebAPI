@@ -30,9 +30,9 @@ namespace AptekaWebAPI.AutoMapping
                 }))
                 .ForMember(c => c.Product, r => r.MapFrom(dto => new Product
                 {
-                    Name = dto.Name,
-                    Price = dto.Price,
-                    Id = dto.ProductId
+                    ProductName = dto.Name,
+                    ProductPrice = dto.Price,
+                    ProductId = dto.ProductId
                 }));
 
                 cfg.CreateMap<CreateUserDTO, User>()

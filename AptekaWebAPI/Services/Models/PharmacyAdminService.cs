@@ -36,7 +36,7 @@ namespace AptekaWebAPI.Services.Models
                  .Products
                  .Include(r => r.Categories)
                  .ToList()
-                 .Where(x => x.Id == id).FirstOrDefault();
+                 .Where(x => x.ProductId == id).FirstOrDefault();
 
             if (product == null) throw new Exception();
 
@@ -63,7 +63,7 @@ namespace AptekaWebAPI.Services.Models
                .Products
                .Include(r => r.Categories)
                .ToList()
-               .Where(x => x.Id == id).FirstOrDefault();
+               .Where(x => x.ProductId == id).FirstOrDefault();
 
             if(product == null) throw new Exception();
 
@@ -72,9 +72,9 @@ namespace AptekaWebAPI.Services.Models
 
         public void Modify(UpdateProductDTO dto)
         {
-            var selectedProduct = _context.Products.ToList().Where(x => x.Id == dto.Id).FirstOrDefault();
+            var selectedProduct = _context.Products.ToList().Where(x => x.ProductId == dto.Id).FirstOrDefault();
             if (selectedProduct == null) throw new Exception();
-            selectedProduct.Price = dto.Price;
+            selectedProduct.ProductPrice = dto.Price;
             _context.SaveChanges();
         }
     }
