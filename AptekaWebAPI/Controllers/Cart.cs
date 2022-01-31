@@ -30,14 +30,14 @@ namespace AptekaWebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("remove/{id}")]
         public ActionResult RemoveById([FromHeader] string token, [FromRoute] int id)
         {
             _service.RemoveById(id);
             return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update")]
         public ActionResult Modify([FromHeader] string token, [FromBody] AddToCartDTO dto)
         {
             _service.Modify(dto);
