@@ -8,8 +8,11 @@ namespace AptekaWebAPI.Entities
     public class Cart
     {
         public int Id { get; set; }
-        public User User { get; set; }
-        public Product Product { get; set; }
+        public int UserId { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+
+        public int ProductPrice { get; set; }
         public int Count { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace AptekaWebAPI.Services.Models
             if (currentUser == null) throw new Exception();
 
 
-            return currentUser.UserId;
+            return currentUser.Id;
         }
 
 

@@ -36,7 +36,7 @@ namespace AptekaWebAPI.Services.Models
                .Products
                .Include(r => r.Categories)
                .ToList()
-               .Where(x => x.ProductId == id).FirstOrDefault();
+               .Where(x => x.Id == id).FirstOrDefault();
 
             if (product == null) throw new Exception();
 

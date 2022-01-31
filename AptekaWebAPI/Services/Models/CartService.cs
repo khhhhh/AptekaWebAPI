@@ -20,16 +20,16 @@ namespace AptekaWebAPI.Services.Models
         }
         public void AddById(int UserId, AddToCartDTO dto)
         {
-            var selectedProduct = _context.Products.Where(x => x.ProductId == dto.Id).FirstOrDefault();
+            var selectedProduct = _context.Products.Where(x => x.Id == dto.Id).FirstOrDefault();
             if (selectedProduct == null) throw new Exception();
-            var user = _context.Users.Where(x => x.UserId == UserId).FirstOrDefault();
+            var user = _context.Users.Where(x => x.Id == UserId).FirstOrDefault();
             if(user == null) throw new Exception();
             var cart = new CartDTO()
             {
                 Count = dto.Count,
                 //ProductId = selectedProduct.Id,
-                Price = selectedProduct.ProductPrice,
-                Name = selectedProduct.ProductName,
+                Price = selectedProduct.Price,
+                Name = selectedProduct.Name,
                 Login = user.Email
             };
 
@@ -42,13 +42,14 @@ namespace AptekaWebAPI.Services.Models
 
         public IEnumerable<CartDTO> GetAll(int userId)
         {
-            var product = _context.Carts.ToList().FirstOrDefault();
+            //var product = _context.Carts.ToList().FirstOrDefault();
 
-            var userLogin = _context.Users.Where(x => x.UserId == userId).FirstOrDefault()?.Email; 
+            //var userLogin = _context.Users.Where(x => x.Id == userId).FirstOrDefault()?.Email; 
 
-            var products = _context.Carts.ToList().Where(x => x.User.Email == userLogin);
-            if (products == null) throw new Exception();
-            return _mapper.Map<List<CartDTO>>(products);
+            //var products = _context.Carts.ToList().Where(x => x.User.Email == userLogin);
+            //if (products == null) throw new Exception();
+            //return _mapper.Map<List<CartDTO>>(products);
+            return null;
         }
 
         public CartDTO GetByID(int id)
