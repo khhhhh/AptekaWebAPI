@@ -13,8 +13,8 @@ namespace AptekaWebAPI.Services.Models
         private readonly PharmacyContext _context;
         public void EmailSend(int id)
         {
-            string email = "systemymedycznetest@gmail.com";
-            string password = "12345Q#we6789";
+            string email = "";
+            string password = "";
             User user = _context.Users
                 .ToList()
                 .Where(x => x.Id == id)
@@ -62,6 +62,7 @@ namespace AptekaWebAPI.Services.Models
 
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
+                    smtp.UseDefaultCredentials = false;
                     smtp.Credentials = new NetworkCredential(email, password);
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
