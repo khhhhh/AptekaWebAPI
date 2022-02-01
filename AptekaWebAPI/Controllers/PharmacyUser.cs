@@ -1,4 +1,5 @@
-﻿using AptekaWebAPI.Services;
+﻿using AptekaWebAPI.Properties.DTOs;
+using AptekaWebAPI.Services;
 using AptekaWebAPI.Tokens;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,12 +22,13 @@ namespace AptekaWebAPI.Controllers
 
         }
         [HttpGet("all")]
-        public ActionResult GetAll([FromHeader] string token)
+        public ActionResult<IEnumerable<ProductDTO>> GetAll([FromHeader] string token)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
             if (activeUser == null) throw new Exception();
-            _service.GetAll();
-            return Ok();
+            var products = _service.GetAll();
+            if (products == null) throw new Exception();
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
@@ -35,8 +37,10 @@ namespace AptekaWebAPI.Controllers
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
             if (activeUser == null) throw new Exception();
 
-            _service.GetById(id);
-            return Ok();
+
+            var product = _service.GetById(id);
+            if (product == null) throw new Exception();
+            return Ok(product);
         }
 
     }
