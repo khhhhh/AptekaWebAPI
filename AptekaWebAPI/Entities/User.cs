@@ -11,6 +11,7 @@ namespace AptekaWebAPI.Entities
         public string Email { get; set; }
         public string Name { get; set; }   
         public string LastName { get; set; } 
+        public int AddressId { get; set; }
         public Address Address { get; set; } 
         public string PasswordHash { get; set; }
         public bool IsAdmin { get; set; }

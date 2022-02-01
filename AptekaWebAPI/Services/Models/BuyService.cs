@@ -25,8 +25,9 @@ namespace AptekaWebAPI.Services.Models
                 .ToList()
                 .Where(x => x.UserId == id);
 
+            if (cartItems == null || cartItems.Count() == 0) throw new Exception("There is no items in the cart!");
 
-            var address = user.Address;
+            var address = _context.Addresses.Where(x => x.Id == user.AddressId).FirstOrDefault();
 
             long inTotal = 0L;
 

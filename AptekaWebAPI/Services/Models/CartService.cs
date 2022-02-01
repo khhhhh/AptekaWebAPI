@@ -90,7 +90,10 @@ namespace AptekaWebAPI.Services.Models
             var selectedCart = _context.Carts.ToList().Where(x => x.Id == dto.Id).FirstOrDefault();
             if(selectedCart == null) throw new Exception(Resources.productNotFound);
 
+            var price = selectedCart.ProductPrice / selectedCart.ProductPrice;
+
             selectedCart.Count = dto.Count;
+            selectedCart.ProductPrice = price * dto.Count;
             _context.SaveChanges();
         }
 

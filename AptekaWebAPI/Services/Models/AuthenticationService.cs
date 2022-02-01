@@ -46,11 +46,11 @@ namespace AptekaWebAPI.Services.Models
                 PostalCode = dto.PostalCode,
                 Street = dto.Street
             };
-            var newAddress = _mapper.Map<Address>(addressDto);
+            //var newAddress = _mapper.Map<Address>(addressDto);
             var newUser = _mapper.Map<User>(dto);
-            newUser.Address = newAddress;
+            //newUser.Address = newAddress;
             newUser.PasswordHash = _seeder.getHash(dto.Password);
-            _context.Addresses.Add(newAddress);
+            _context.Addresses.Add(newUser.Address);
             _context.Users.Add(newUser);
 
             _context.SaveChanges();
