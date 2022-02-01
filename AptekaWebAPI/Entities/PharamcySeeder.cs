@@ -65,7 +65,7 @@ namespace AptekaWebAPI.Entities
                 new Product()
                 {
                     Name = "Chlorphenamine",
-                    Categories = new List<ProductCategory> { productCategories[0], productCategories[1] },
+                    Categories = new List<ProductCategory> { productCategories[2] },
                     Price = 15,
                     Count = 200,
                     Description = "Helps you stop sneezing!"
