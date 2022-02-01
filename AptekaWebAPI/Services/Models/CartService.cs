@@ -35,6 +35,8 @@ namespace AptekaWebAPI.Services.Models
                     (selectedProduct.Count == 1)? string.Empty: "s",
                     selectedProduct.Name
                     ));
+            if (AddIfExist(user, dto))
+                return;
 
             var cart = new CartDTO()
             {
@@ -100,5 +102,28 @@ namespace AptekaWebAPI.Services.Models
             _context.SaveChanges();
         }
 
+        private bool AddIfExist(User user, AddToCartDTO dto)
+        {
+            var existedProduct = _context
+                .Carts
+                .Where(
+                    x => x.UserId == user.Id
+                    && x.ProductId == dto.Id)
+                .FirstOrDefault();
+
+            if(existedProduct != null)
+            {
+                int count = existedProduct.Count + dto.Count;
+                AddToCartDTO addToCartDTO = new AddToCartDTO()
+                {
+                    Count = count,
+                    Id = existedProduct.Id
+                };
+                this.Modify(addToCartDTO);
+                return true;
+            }
+
+            return false;
+        }
     }
 }
