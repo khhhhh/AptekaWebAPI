@@ -23,7 +23,14 @@ namespace AptekaWebAPI.Services.Models
             var selectedProduct = _context.Products.Where(x => x.Id == dto.Id).FirstOrDefault();
             if (selectedProduct == null) throw new Exception();
             var user = _context.Users.Where(x => x.Id == UserId).FirstOrDefault();
+
+
             if(user == null) throw new Exception();
+
+            // check if enougth quantity
+            if (dto.Count > selectedProduct.Count)
+                throw new Exception();
+
             var cart = new CartDTO()
             {
                 Count = dto.Count,
@@ -33,9 +40,12 @@ namespace AptekaWebAPI.Services.Models
                 ProductName = selectedProduct.Name,
             };
 
+            selectedProduct.Count -= cart.Count;
+
             var newCart = _mapper.Map<Cart>(cart);
             _context.Carts.Add(newCart);
             _context.SaveChanges();
+
         }
 
         public IEnumerable<CartDTO> GetAll(int userId)
@@ -59,6 +69,11 @@ namespace AptekaWebAPI.Services.Models
 
             var selectedCart = _context.Carts.ToList().Where(x => x.Id == id).FirstOrDefault();
             if (selectedCart == null) throw new Exception();
+
+            var selectedProduct = _context.Products.ToList().Where(x => x.Id == selectedCart.ProductId).FirstOrDefault();
+            if (selectedCart == null) throw new Exception();
+
+            selectedProduct.Count += selectedCart.Count;
 
             _context.Carts.Remove(selectedCart);
             _context.SaveChanges();
