@@ -37,7 +37,7 @@ namespace AptekaWebAPI.Services.Models
         {
             var Users = _context.Users.ToList();
 
-            if (Users.Where(x => x.Email == dto.Email).First() != null)
+            if (Users != null && Users.Where(x => x.Email == dto.Email).FirstOrDefault() != null)
                 throw new Exception(Resources.emailNotUnique);
 
             var addressDto = new CreateAddressDTO()
@@ -50,8 +50,8 @@ namespace AptekaWebAPI.Services.Models
             var newUser = _mapper.Map<User>(dto);
             newUser.Address = newAddress;
             newUser.PasswordHash = _seeder.getHash(dto.Password);
-            _context.Users.Add(newUser);
             _context.Addresses.Add(newAddress);
+            _context.Users.Add(newUser);
 
             _context.SaveChanges();
 
