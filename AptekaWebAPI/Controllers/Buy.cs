@@ -24,7 +24,7 @@ namespace AptekaWebAPI.Controllers
         public ActionResult BuyFromCart([FromHeader] string token)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null) throw new Exception();
+            if (activeUser == null) throw new Exception("User is not logged in!");
             _service.EmailSend(activeUser.Id);
             return Ok();
         }

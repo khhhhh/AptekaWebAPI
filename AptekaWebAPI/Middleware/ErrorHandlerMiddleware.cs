@@ -17,7 +17,10 @@ namespace AptekaWebAPI.Middleware
             catch (Exception ex)
             {
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Something go wrong");
+                string message = "Something went wrong!";
+                if (!string.IsNullOrEmpty(ex.Message))
+                    message = ex.Message;
+                await context.Response.WriteAsync(message);
             }
         }
     }

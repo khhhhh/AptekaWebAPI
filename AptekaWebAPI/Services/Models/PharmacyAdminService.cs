@@ -38,7 +38,7 @@ namespace AptekaWebAPI.Services.Models
                  .ToList()
                  .Where(x => x.Id == id).FirstOrDefault();
 
-            if (product == null) throw new Exception();
+            if (product == null) throw new Exception(Resources.productNotFound);
 
             _context.Products.Remove(product);
 
@@ -53,7 +53,7 @@ namespace AptekaWebAPI.Services.Models
                 .Include(r => r.Categories)
                 .ToList();
 
-            if (products == null) throw new Exception();
+            if (products == null) throw new Exception(Resources.productsNotFound);
             return _mapper.Map<List<ProductDTO>>(products);
         }
 
@@ -65,7 +65,7 @@ namespace AptekaWebAPI.Services.Models
                .ToList()
                .Where(x => x.Id == id).FirstOrDefault();
 
-            if(product == null) throw new Exception();
+            if(product == null) throw new Exception(Resources.productNotFound);
 
             return _mapper.Map<ProductDTO>(product);
         }
@@ -73,7 +73,7 @@ namespace AptekaWebAPI.Services.Models
         public void Modify(UpdateProductDTO dto)
         {
             var selectedProduct = _context.Products.ToList().Where(x => x.Id == dto.Id).FirstOrDefault();
-            if (selectedProduct == null) throw new Exception();
+            if (selectedProduct == null) throw new Exception(Resources.productNotFound);
             selectedProduct.Price = dto.Price;
             _context.SaveChanges();
         }

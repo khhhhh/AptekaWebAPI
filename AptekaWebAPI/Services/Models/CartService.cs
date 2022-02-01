@@ -21,7 +21,7 @@ namespace AptekaWebAPI.Services.Models
         public void AddById(int UserId, AddToCartDTO dto)
         {
             var selectedProduct = _context.Products.Where(x => x.Id == dto.Id).FirstOrDefault();
-            if (selectedProduct == null) throw new Exception();
+            if (selectedProduct == null) throw new Exception(Resources.productNotFound);
             var user = _context.Users.Where(x => x.Id == UserId).FirstOrDefault();
 
 
@@ -29,7 +29,12 @@ namespace AptekaWebAPI.Services.Models
 
             // check if enougth quantity
             if (dto.Count > selectedProduct.Count)
-                throw new Exception();
+                throw new Exception(string.Format("{0} For now, we have {1} piece{2} of {3}",
+                    Resources.notEnougthProducts,
+                    selectedProduct.Count,
+                    (selectedProduct.Count == 1)? string.Empty: "s",
+                    selectedProduct.Name
+                    ));
 
             var cart = new CartDTO()
             {
@@ -52,7 +57,7 @@ namespace AptekaWebAPI.Services.Models
         {
 
             var products = _context.Carts.ToList().Where(x => x.UserId == userId);
-            if (products == null) throw new Exception();
+            if (products == null) throw new Exception(Resources.emptyCart);
 
             return _mapper.Map<List<CartDTO>>(products);
         }
@@ -60,7 +65,7 @@ namespace AptekaWebAPI.Services.Models
         public CartDTO GetByID(int id)
         {
             var product = _context.Carts.ToList().Where(x => x.Id == id).FirstOrDefault();
-            if (product == null) throw new Exception();
+            if (product == null) throw new Exception(Resources.productNotFound);
             return _mapper.Map<CartDTO>(product);
         }
 
@@ -68,11 +73,11 @@ namespace AptekaWebAPI.Services.Models
         {
 
             var selectedCart = _context.Carts.ToList().Where(x => x.Id == id).FirstOrDefault();
-            if (selectedCart == null) throw new Exception();
+            if (selectedCart == null) throw new Exception(Resources.emptyCart);
 
+            // select product, check if exists and add quantity
             var selectedProduct = _context.Products.ToList().Where(x => x.Id == selectedCart.ProductId).FirstOrDefault();
-            if (selectedCart == null) throw new Exception();
-
+            if (selectedProduct == null) throw new Exception(Resources.productNotFound);
             selectedProduct.Count += selectedCart.Count;
 
             _context.Carts.Remove(selectedCart);
@@ -83,7 +88,7 @@ namespace AptekaWebAPI.Services.Models
         public void Modify(AddToCartDTO dto)
         {
             var selectedCart = _context.Carts.ToList().Where(x => x.Id == dto.Id).FirstOrDefault();
-            if(selectedCart == null) throw new Exception();
+            if(selectedCart == null) throw new Exception(Resources.productNotFound);
 
             selectedCart.Count = dto.Count;
             _context.SaveChanges();

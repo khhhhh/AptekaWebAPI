@@ -25,7 +25,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult AddNewProduct([FromHeader] string token, [FromBody] CreateProductDTO dto)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id > 3) throw new Exception();
+            if (activeUser == null ) throw new Exception(Resources.noUser);
+            if (activeUser.Id > 3) throw new Exception(Resources.userNotAdmin);
             _service.AddNewProduct(dto);
             return Ok();
         }
@@ -34,7 +35,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult<IEnumerable<ProductDTO>> GetAllProducts([FromHeader] string token)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id > 3) throw new Exception();
+            if (activeUser == null ) throw new Exception(Resources.noUser);
+            if (activeUser.Id > 3) throw new Exception(Resources.userNotAdmin);
             var products = _service.GetAll();
             return Ok(products);
         }
@@ -43,7 +45,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult<ProductDTO> GetProductById([FromHeader] string token, [FromRoute] int id)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id > 3) throw new Exception();
+            if (activeUser == null ) throw new Exception(Resources.noUser);
+            if (activeUser.Id > 3) throw new Exception(Resources.userNotAdmin);
 
             var product = _service.GetById(id);
             return Ok(product);
@@ -54,7 +57,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult Modify([FromHeader] string token,[FromBody] UpdateProductDTO dto)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id > 3) throw new Exception();
+            if (activeUser == null ) throw new Exception(Resources.noUser);
+            if (activeUser.Id > 3) throw new Exception(Resources.userNotAdmin);
 
             _service.Modify(dto);
             return Ok();
@@ -64,7 +68,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult Delete([FromHeader] string token, [FromRoute] int id)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id > 3) throw new Exception();
+            if (activeUser == null ) throw new Exception(Resources.noUser);
+            if (activeUser.Id > 3) throw new Exception(Resources.userNotAdmin);
             _service.Delete(id);
             return Ok();
         }

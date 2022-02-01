@@ -25,7 +25,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult AddById([FromHeader] string token, [FromBody] AddToCartDTO dto)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id < 4) throw new Exception();
+            if (activeUser == null ) throw new Exception("User not found!");
+            if (activeUser.Id < 4) throw new Exception("You are logged in like an Admin. Please, log in as User");
             _service.AddById(activeUser.Id, dto);
             return Ok();
         }
@@ -34,7 +35,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult RemoveById([FromHeader] string token, [FromRoute] int id)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id < 4) throw new Exception();
+            if (activeUser == null ) throw new Exception("User not found!");
+            if (activeUser.Id < 4) throw new Exception("You are logged in like an Admin. Please, log in as User");
 
             _service.RemoveById(id);
             return Ok();
@@ -44,7 +46,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult Modify([FromHeader] string token, [FromBody] AddToCartDTO dto)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id < 4) throw new Exception();
+            if (activeUser == null ) throw new Exception("User not found!");
+            if (activeUser.Id < 4) throw new Exception("You are logged in like an Admin. Please, log in as User");
 
             _service.Modify(dto);
             return Ok();
@@ -54,7 +57,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult GetAllFavourites([FromHeader] string token)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id < 4) throw new Exception();
+            if (activeUser == null ) throw new Exception("User not found!");
+            if (activeUser.Id < 4) throw new Exception("You are logged in like an Admin. Please, log in as User");
 
             var allProducts = _service.GetAll(activeUser.Id);
             return Ok(allProducts);
@@ -64,7 +68,8 @@ namespace AptekaWebAPI.Controllers
         public ActionResult GetFavouriteByID([FromHeader] string token, [FromRoute] int id)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null || activeUser.Id < 4) throw new Exception();
+            if (activeUser == null ) throw new Exception("User not found!");
+            if (activeUser.Id < 4) throw new Exception("You are logged in like an Admin. Please, log in as User");
             var selectedProduct = _service.GetByID(id);
             return Ok(selectedProduct);
         }

@@ -13,8 +13,8 @@ namespace AptekaWebAPI.Services.Models
         private readonly PharmacyContext _context;
         public void EmailSend(int id)
         {
-            string email = "";
-            string password = "";
+            string email = "oleg.hutsko@gmail.com";
+            string password = "fmvwzrfapbmrfdhw";
             User user = _context.Users
                 .ToList()
                 .Where(x => x.Id == id)
@@ -27,6 +27,8 @@ namespace AptekaWebAPI.Services.Models
 
             var address = user.Address;
 
+            long inTotal = 0L; 
+
             StringBuilder sb = new StringBuilder();
             foreach(var cartItem in cartItems)
             {
@@ -35,7 +37,8 @@ namespace AptekaWebAPI.Services.Models
                     product.Name,
                     cartItem.Count,
                     (cartItem.Count > 1) ? "s" : string.Empty,
-                    product.Price * cartItem.Count);
+                    cartItem.ProductPrice);
+                inTotal += cartItem.ProductPrice;
             }
             string body = string.Format(@" <h1>Hello, {0}!</h1><br>
              <p> Thank you for purchasing next items:
@@ -43,16 +46,17 @@ namespace AptekaWebAPI.Services.Models
                         {1}
                   </ul>
             </p>
+            <p> <b> Total price is: {2} zł. </b> </p>
             <br>
             <p> It's gonna be send on this address: <br>
-                {2} <br>
                 {3} <br>
                 {4} <br>
+                {5} <br>
             </p>
 
             <p> With love, <b> Apteka Web Api. </b> </p>
             ", 
-            user.Name, sb.ToString(), address?.City, address?.Street, address?.PostalCode);
+            user.Name, sb.ToString(), inTotal, address?.City, address?.Street, address?.PostalCode);
 
             using (MailMessage mail = new MailMessage())
             {

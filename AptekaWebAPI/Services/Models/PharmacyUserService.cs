@@ -25,7 +25,7 @@ namespace AptekaWebAPI.Services.Models
                 .Include(r => r.Categories)
                 .ToList();
 
-            if (products == null) throw new Exception();
+            if (products == null) throw new Exception(Resources.productsNotFound);
 
             return _mapper.Map<List<ProductDTO>>(products);
         }
@@ -38,7 +38,7 @@ namespace AptekaWebAPI.Services.Models
                .ToList()
                .Where(x => x.Id == id).FirstOrDefault();
 
-            if (product == null) throw new Exception();
+            if (product == null) throw new Exception(Resources.productNotFound);
 
             return _mapper.Map<ProductDTO>(product);
         }

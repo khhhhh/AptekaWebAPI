@@ -22,6 +22,7 @@ namespace AptekaWebAPI.AutoMapping
                 cfg.CreateMap<CategoryDTO, ProductCategory>();
                 cfg.CreateMap<CreateCategoryDTO, ProductCategory>();
                 cfg.CreateMap<Cart, CartDTO>();
+                cfg.CreateMap<CreateAddressDTO, Address>();
 
                 cfg.CreateMap<CartDTO, Cart>();
                 

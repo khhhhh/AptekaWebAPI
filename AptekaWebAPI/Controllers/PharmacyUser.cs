@@ -25,9 +25,9 @@ namespace AptekaWebAPI.Controllers
         public ActionResult<IEnumerable<ProductDTO>> GetAll([FromHeader] string token)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null) throw new Exception();
+            if (activeUser == null ) throw new Exception(Resources.notLoggedIn);
             var products = _service.GetAll();
-            if (products == null) throw new Exception();
+            if (products == null) throw new Exception(Resources.productsNotFound);
             return Ok(products);
         }
 
@@ -35,11 +35,11 @@ namespace AptekaWebAPI.Controllers
         public ActionResult GetById([FromHeader] string token, [FromRoute] int id)
         {
             var activeUser = new ActiveUsers().GetAllLoginedUsers().Where(x => x.Token == token).FirstOrDefault();
-            if (activeUser == null) throw new Exception();
+            if (activeUser == null) throw new Exception(Resources.notLoggedIn);
 
 
             var product = _service.GetById(id);
-            if (product == null) throw new Exception();
+            if (product == null) throw new Exception(Resources.productNotFound);
             return Ok(product);
         }
 
