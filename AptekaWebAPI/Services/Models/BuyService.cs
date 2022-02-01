@@ -1,6 +1,7 @@
 ﻿using AptekaWebAPI.Database;
 using AptekaWebAPI.Entities;
 using AptekaWebAPI.Services.Interfaces;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -27,10 +28,10 @@ namespace AptekaWebAPI.Services.Models
 
             var address = user.Address;
 
-            long inTotal = 0L; 
+            long inTotal = 0L;
 
             StringBuilder sb = new StringBuilder();
-            foreach(var cartItem in cartItems)
+            foreach (var cartItem in cartItems)
             {
                 var product = _context.Products.Where(x => x.Id == cartItem.ProductId).FirstOrDefault();
                 sb.AppendFormat("<li>{0}, {1} piece{2} : {3} zł.</li>\n",
@@ -55,7 +56,7 @@ namespace AptekaWebAPI.Services.Models
             </p>
 
             <p> With love, <b> Apteka Web Api. </b> </p>
-            ", 
+            ",
             user.Name, sb.ToString(), inTotal, address?.City, address?.Street, address?.PostalCode);
 
             using (MailMessage mail = new MailMessage())
@@ -74,6 +75,17 @@ namespace AptekaWebAPI.Services.Models
                     smtp.Send(mail);
                 }
             }
+        }
+
+        public void RemoveAllFromCart(int id)
+        {
+            _context
+                .Carts
+                .Where(x => x.UserId == id)
+                .ToList()
+                .ForEach(x => _context.Carts.Remove(x));
+
+            _context.SaveChanges();
         }
         public BuyService(PharmacyContext context)
         {

@@ -11,5 +11,6 @@
         public static string notEnougthProducts = "Sorry, we don't have this amount right now.";
 
         public static string emptyCart = "You have an empty cart!";
+        public static string errorPurchase = "Sorry, you can't buy it, something went wrong!";
     }
 }
