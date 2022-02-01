@@ -13,8 +13,8 @@ namespace AptekaWebAPI.Services.Models
         private readonly PharmacyContext _context;
         public void EmailSend(int id)
         {
-            string email = "oleg.hutsko@gmail.com";
-            string password = "fmvwzrfapbmrfdhw";
+            string email = "";
+            string password = "";
             User user = _context.Users
                 .ToList()
                 .Where(x => x.Id == id)
