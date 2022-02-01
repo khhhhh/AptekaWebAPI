@@ -17,11 +17,15 @@ namespace AptekaWebAPI.Properties.DTOs
         [MinLength(5)]
         public string Name { get; set; }
 
+        [Required]
         [MaxLength(600)]
         public string Description { get; set; }
 
         [Required]
         public decimal Price { get; set; }
+        
+        [Required]
+        public int Count { get; set; }
 
         public List<ProductCategory> Categories { get; set; }
     }
