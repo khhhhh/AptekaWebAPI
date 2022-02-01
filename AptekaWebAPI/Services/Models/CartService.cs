@@ -35,8 +35,6 @@ namespace AptekaWebAPI.Services.Models
                     (selectedProduct.Count == 1)? string.Empty: "s",
                     selectedProduct.Name
                     ));
-            if (AddIfExist(user, dto))
-                return;
 
             var cart = new CartDTO()
             {
@@ -48,6 +46,8 @@ namespace AptekaWebAPI.Services.Models
             };
 
             selectedProduct.Count -= cart.Count;
+            if (AddIfExist(user, dto))
+                return;
 
             var newCart = _mapper.Map<Cart>(cart);
             _context.Carts.Add(newCart);
