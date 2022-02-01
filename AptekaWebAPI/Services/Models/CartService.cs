@@ -36,7 +36,7 @@ namespace AptekaWebAPI.Services.Models
                 Count = dto.Count,
                 UserId = UserId,
                 ProductId = selectedProduct.Id,
-                Price = selectedProduct.Price,
+                ProductPrice = selectedProduct.Price * dto.Count,
                 ProductName = selectedProduct.Name,
             };
 
